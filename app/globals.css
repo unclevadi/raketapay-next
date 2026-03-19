@@ -1,0 +1,152 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes glow {
+  0%,
+  100% {
+    opacity: 0.5;
+    filter: blur(8px);
+  }
+  50% {
+    opacity: 0.8;
+    filter: blur(12px);
+  }
+}
+
+.glow-effect {
+  animation: glow 4s ease-in-out infinite;
+}
+
+.bento-card {
+  transition: border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(245, 245, 220, 0.1);
+}
+
+/* Подъём карточки только на устройствах с hover (не «липнет» на тачскрине) */
+@media (hover: hover) and (pointer: fine) {
+  .bento-card:hover {
+    border-color: rgba(190, 30, 45, 0.5);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px -10px rgba(190, 30, 45, 0.3);
+  }
+}
+
+/* Когда открыта модалка (Services) — отключаем hover-«прыжки» фоновых карточек. */
+body.modal-open .bento-card:hover {
+  border-color: rgba(245, 245, 220, 0.1) !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bento-card {
+    transition: none;
+  }
+  .bento-card:hover {
+    transform: none;
+  }
+}
+
+/* Вырез iPhone / safe area */
+.safe-area-pt {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+.safe-area-pb {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.noise-bg {
+  background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuCU1Ab1VhAZjpQfbeA3s7piYrL89jHcxl-LEb7Uo2Iv3BrWSw-cCO2gZf4VXLM8cm-7Sai47DghMmLhuhTgEP9foOMJZUnqIYQTZSWQ3zd62FZpZASqL_Cm9iX7uh_WRot2wkJIw-2kiOunw8mtbL-L2dvv_x9YbWE8fowUppd0MS6Rp92WMCw_B0U4ZAmOfeLYm06BcEmDXqnGnsVf4S3Ts88ZcGrksiHZ0Pq0zNYCg1lC3ytx6NYJzAe_EkD72oBojX4_k4-M39c8);
+}
+
+@keyframes feed-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-feed-in {
+  animation: feed-in 0.5s ease-out forwards;
+}
+
+/* Лёгкая темная обводка заголовков для читабельности на ярком фоне */
+.headline-outline {
+  text-shadow:
+    0 0 4px rgba(0, 0, 0, 0.85),
+    0 0 12px rgba(0, 0, 0, 0.65);
+}
+
+/* Анимации для блока "Траектория Полета" */
+@keyframes step-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-step-in {
+  animation: step-in 0.6s ease-out both;
+}
+
+@keyframes num-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 rgba(190, 30, 45, 0);
+  }
+  50% {
+    box-shadow: 0 0 18px rgba(190, 30, 45, 0.35);
+  }
+}
+
+.animate-num-pulse {
+  animation: num-pulse 2.2s ease-in-out infinite;
+}
+
+@keyframes arrow-sweep {
+  0% {
+    opacity: 0.55;
+    transform: translateX(-2px);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(2px);
+  }
+  100% {
+    opacity: 0.55;
+    transform: translateX(-2px);
+  }
+}
+
+.animate-arrow-sweep {
+  animation: arrow-sweep 1.8s ease-in-out infinite;
+}
+
+/**
+ * Скрыть стандартную «полоску» скроллбара справа (Chrome / Safari / Firefox).
+ * Прокрутка колёсиком, тачем и клавишами сохраняется.
+ */
+html.scrollbar-none,
+body.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+html.scrollbar-none::-webkit-scrollbar,
+body.scrollbar-none::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+  background: transparent;
+}
