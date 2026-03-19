@@ -3,10 +3,10 @@
  * Алиасы сопоставляют название в категории с одной карточкой (например YouTube Premium → YouTube).
  */
 
-const TELEGRAM_BASE = "https://t.me/raketa_pay?text=";
+const TELEGRAM_DOMAIN = "raketa_pay";
 
 export const orderUrl = (msg: string) =>
-  TELEGRAM_BASE + encodeURIComponent(msg);
+  `tg://resolve?domain=${TELEGRAM_DOMAIN}&text=${encodeURIComponent(msg)}`;
 
 export type ServiceDetail = {
   title: string;
@@ -20,7 +20,7 @@ const SERVICE_DETAILS: Record<string, ServiceDetail> = {
     title: "ChatGPT",
     description:
       "ИИ-ассистент от OpenAI: тексты, код, переводы, идеи и ответы на вопросы. Подписка даёт более мощные модели и расширенные лимиты. В 2026 году оформить подписку ChatGPT из России и оплатить зарубежный сервис удобно через Raketa Pay: подскажем тариф, рассчитаем стоимость и поможем с оплатой без лишней бюрократии.",
-    orderUrl: orderUrl("Добрый день. Нужно оформить подписку ChatGPT"),
+    orderUrl: orderUrl("Добрый день. Хочу оформить подписку чата гпт."),
   },
   Netflix: {
     title: "Netflix",

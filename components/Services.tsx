@@ -2,6 +2,19 @@
 
 import { useEffect, useState } from "react";
 import { getServiceDetail, hasServiceDetail } from "@/lib/service-details";
+
+function getTelegramOpenUrls(orderUrl: string) {
+  // Формат из lib/service-details: tg://resolve?domain=...&text=...
+  const domainMatch = orderUrl.match(/[?&]domain=([^&]+)/);
+  const textMatch = orderUrl.match(/[?&]text=([^&]+)/);
+  const domain = domainMatch ? decodeURIComponent(domainMatch[1]) : "raketa_pay";
+  const text = textMatch ? decodeURIComponent(textMatch[1]) : "";
+
+  return {
+    appUrl: `tg://resolve?domain=${encodeURIComponent(domain)}&text=${encodeURIComponent(text)}`,
+    webUrl: `https://t.me/${encodeURIComponent(domain)}?text=${encodeURIComponent(text)}`,
+  };
+}
 type ServiceIcon =
   | {
       name: string;
@@ -271,14 +284,25 @@ export function Services() {
               {activeDetails.description}
             </p>
             {activeDetails.orderUrl && (
-              <a
-                href={activeDetails.orderUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                type="button"
+                onClick={() => {
+                  const { appUrl, webUrl } = getTelegramOpenUrls(activeDetails.orderUrl!);
+
+                  // 1) Пытаемся открыть приложение Telegram с текстом.
+                  window.location.href = appUrl;
+
+                  // 2) Если приложение не открылось, fallback в web-ссылку.
+                  window.setTimeout(() => {
+                    if (!document.hidden) {
+                      window.open(webUrl, "_blank", "noopener,noreferrer");
+                    }
+                  }, 700);
+                }}
                 className="inline-flex items-center justify-center w-full sm:w-auto min-h-[48px] bg-soviet-red text-white font-header text-sm px-6 py-3 uppercase tracking-widest hover:bg-red-700 active:scale-[0.99] transition-colors touch-manipulation"
               >
                 Оформить
-              </a>
+              </button>
             )}
           </div>
         </div>

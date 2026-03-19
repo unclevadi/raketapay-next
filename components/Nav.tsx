@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-const TELEGRAM_URL = "https://t.me/raketapay";
+const TELEGRAM_URL = "https://t.me/raketa_pay";
 
 const NAV_LINKS = [
   { href: "#benefits", label: "Преимущества" },

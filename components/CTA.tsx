@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-const TELEGRAM_URL = "https://t.me/raketapay";
+const TELEGRAM_URL = "https://t.me/raketa_pay";
 
 export function CTA() {
   return (

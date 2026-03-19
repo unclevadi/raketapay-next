@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 
-const TELEGRAM_URL = "https://t.me/raketapay";
+const TELEGRAM_URL = "https://t.me/raketa_pay";
 
 // Используем картинку с космонавткой как подложку для героя.
 // Сохрани файл в папку public/images под именем "hero-cosmonaut.png".
