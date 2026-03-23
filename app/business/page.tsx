@@ -220,7 +220,7 @@ export default function BusinessPage() {
               <span aria-hidden>←</span> На главную
             </Link>
 
-            <h1 className="mt-4 font-header text-[clamp(1.5rem,7.2vw,3.6rem)] font-black uppercase italic leading-tight headline-outline break-words sm:break-normal">
+            <h1 className="mt-4 font-header text-[clamp(1.35rem,6.6vw,3.6rem)] font-black uppercase italic leading-tight headline-outline break-normal whitespace-normal">
               Международные платежи
               <br />
               <span className="text-soviet-red">для юрлиц без хаоса</span>
