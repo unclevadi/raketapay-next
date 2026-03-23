@@ -1,6 +1,4 @@
-import Link from "next/link";
-
-const TELEGRAM_URL = "https://t.me/raketa_pay";
+import { MessengerChoiceTrigger } from "@/components/MessengerChoiceTrigger";
 
 export function CTA() {
   return (
@@ -12,13 +10,13 @@ export function CTA() {
       <h2 className="font-header text-2xl min-[400px]:text-3xl sm:text-4xl md:text-7xl font-black uppercase italic mb-6 sm:mb-8 relative z-10 leading-tight">
         Готов к взлету?
       </h2>
-      <Link
-        href={TELEGRAM_URL}
-        target="_blank"
-        rel="noopener noreferrer"
+      <MessengerChoiceTrigger
         className="inline-flex flex-col min-[400px]:flex-row items-center justify-center gap-3 sm:gap-6 bg-white text-soviet-red px-6 sm:px-10 py-4 sm:py-6 font-header text-sm sm:text-lg uppercase tracking-widest active:scale-[0.98] sm:hover:scale-105 transition-all shadow-xl group-hover:shadow-white/20 relative z-10 w-full max-w-md sm:max-w-none sm:w-auto min-h-[52px]"
       >
-        <span className="text-center">Написать в Telegram</span>
+        <span className="text-center">Выбрать канал связи</span>
+        <span className="text-[10px] sm:text-xs tracking-[0.18em] opacity-80 -mt-1 sm:mt-0 sm:-ml-2">
+          Telegram / MAX
+        </span>
         <svg
           className="h-5 w-5 sm:h-6 sm:w-6 transform sm:group-hover:translate-x-2 transition-transform shrink-0"
           fill="none"
@@ -32,7 +30,7 @@ export function CTA() {
             d="M14 5l7 7m0 0l-7 7m7-7H3"
           />
         </svg>
-      </Link>
+      </MessengerChoiceTrigger>
       <p className="mt-6 sm:mt-8 font-header text-[8px] sm:text-[10px] tracking-[0.2em] sm:tracking-[0.5em] uppercase opacity-70 relative z-10 px-2">
         Ваш надежный терминал в мире без границ
       </p>

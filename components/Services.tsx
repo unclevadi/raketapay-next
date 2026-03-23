@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { getServiceDetail, hasServiceDetail } from "@/lib/service-details";
+import { MessengerChoiceTrigger } from "@/components/MessengerChoiceTrigger";
+import { lockBodyScroll, unlockBodyScroll } from "@/lib/body-scroll-lock";
 
 function getTelegramOpenUrls(orderUrl: string) {
   // Формат из lib/service-details: tg://resolve?domain=...&text=...
@@ -70,12 +72,21 @@ const SERVICES: ServiceIcon[] = [
   { name: "OnlyFans", iconUrl: "https://cdn.simpleicons.org/onlyfans" },
   { name: "Badoo", iconUrl: "https://cdn.simpleicons.org/badoo" },
   { name: "Patreon", iconUrl: "https://cdn.simpleicons.org/patreon" },
+  { name: "Alipay", iconUrl: "https://cdn.simpleicons.org/alipay" },
+  {
+    name: "Денежные переводы",
+    type: "fallback",
+    initials: "FX",
+    bgClass: "bg-tech-cyan/20 border border-tech-cyan/30 rounded-md",
+  },
 ];
 
 const CATEGORIES = [
   { id: "subs", label: "Подписки & Софт", color: "bg-soviet-red" },
   { id: "travel", label: "Путешествия & Жилье", color: "bg-tech-cyan" },
   { id: "market", label: "Маркетплейсы & Игры", color: "bg-soviet-cream" },
+  { id: "transfers", label: "Денежные переводы & Alipay", color: "bg-emerald-400" },
+  { id: "business", label: "Для бизнеса", color: "bg-soviet-red" },
 ];
 
 const CDN_ICON = (slug: string) => `https://cdn.simpleicons.org/${slug}`;
@@ -142,6 +153,41 @@ const CATEGORY_SERVICES: Record<string, CategoryItem[]> = {
     { name: "G2A", iconUrl: CDN_ICON("g2a") },
     { name: "Humble Bundle", iconUrl: CDN_ICON("humblebundle") },
   ],
+  transfers: [
+    { name: "Alipay", iconUrl: CDN_ICON("alipay") },
+    { name: "Денежные переводы", iconUrl: "" },
+    { name: "Денежные переводы из РФ", iconUrl: "" },
+    { name: "SWIFT Transfer", iconUrl: "" },
+    { name: "SEPA Transfer", iconUrl: "" },
+    { name: "Revolut Top Up", iconUrl: "" },
+  ],
+};
+
+const SERVICE_GUIDES: Record<
+  string,
+  {
+    title: string;
+    points: string[];
+  }
+> = {
+  "Денежные переводы": {
+    title: "Как оформить перевод",
+    points: [
+      "Напишите страну, валюту и сумму перевода.",
+      "Пришлите реквизиты получателя (IBAN/SWIFT/номер карты - что доступно).",
+      "Мы считаем итог с комиссией и согласовываем перед оплатой.",
+      "После подтверждения отправляем перевод и сообщаем статус.",
+    ],
+  },
+  Alipay: {
+    title: "Что нужно для пополнения Alipay",
+    points: [
+      "Сервис: Alipay + сумма в CNY (или эквивалент в RUB/USDT).",
+      "Скриншот QR-кода или реквизиты для пополнения.",
+      "После оплаты подтверждаем зачисление и отправляем результат в Telegram.",
+      "Подходит для оплаты Alibaba / TaoBao / 1688 и других китайских сервисов.",
+    ],
+  },
 };
 
 export function Services() {
@@ -152,18 +198,24 @@ export function Services() {
 
   const activeDetails =
     activeService != null ? getServiceDetail(activeService) : null;
+  const activeGuide = activeDetails ? SERVICE_GUIDES[activeDetails.title] : null;
+  const orderLabel = activeDetails
+    ? `Оформить ${
+        activeDetails.title.length > 20
+          ? `${activeDetails.title.slice(0, 20)}...`
+          : activeDetails.title
+      }`
+    : "Оформить";
 
   // Чтобы модалка не "ехала" вместе со скроллом страницы на мобиле.
   useEffect(() => {
     const open = activeService != null || categoryModal != null;
     if (!open) return;
-
-    const prevOverflow = document.body.style.overflow;
+    lockBodyScroll();
     document.body.classList.add("modal-open");
-    document.body.style.overflow = "hidden";
     return () => {
       document.body.classList.remove("modal-open");
-      document.body.style.overflow = prevOverflow;
+      unlockBodyScroll();
     };
   }, [activeService, categoryModal]);
 
@@ -180,30 +232,45 @@ export function Services() {
             Сервисов
           </h2>
           <p className="text-soviet-cream/60 text-sm mb-4">
-            Подписки, софт, путешествия, маркетплейсы и игры - оплачиваем что
-            угодно.
+            Подписки, софт, путешествия, маркетплейсы, игры и международные
+            переводы - оплачиваем что угодно.
           </p>
           <p className="text-soviet-cream/50 text-xs leading-relaxed mb-8">
             Raketa Pay - сервис оплаты зарубежных подписок и сервисов из России.
-            В 2026 году оформить подписку на ChatGPT, стриминг, софт и путешествия
-            проще всего через нас: без лишних шагов и с понятной поддержкой в
+            В 2026 году через нас можно оплачивать не только подписки, но и
+            Alipay и международные переводы: быстро, прозрачно и с поддержкой в
             Telegram.
           </p>
           <div className="space-y-4">
             {CATEGORIES.map(({ id, label, color }) => (
-              <button
-                key={id}
-                type="button"
-                onClick={() => setCategoryModal(id)}
-                className="w-full flex items-center gap-4 group text-left hover:opacity-90 transition-opacity"
-              >
-                <div
-                  className={`w-2 h-2 ${color} group-hover:w-4 transition-all shrink-0`}
-                />
-                <span className="font-header text-[10px] tracking-widest uppercase">
-                  {label}
-                </span>
-              </button>
+              id === "business" ? (
+                <a
+                  key={id}
+                  href="/business"
+                  className="w-full flex items-center gap-4 group text-left hover:opacity-90 transition-opacity"
+                >
+                  <div
+                    className={`w-2 h-2 ${color} group-hover:w-4 transition-all shrink-0`}
+                  />
+                  <span className="font-header text-[11px] sm:text-xs tracking-[0.14em] uppercase leading-tight">
+                    {label}
+                  </span>
+                </a>
+              ) : (
+                <button
+                  key={id}
+                  type="button"
+                  onClick={() => setCategoryModal(id)}
+                  className="w-full flex items-center gap-4 group text-left hover:opacity-90 transition-opacity"
+                >
+                  <div
+                    className={`w-2 h-2 ${color} group-hover:w-4 transition-all shrink-0`}
+                  />
+                  <span className="font-header text-[11px] sm:text-xs tracking-[0.14em] uppercase leading-tight">
+                    {label}
+                  </span>
+                </button>
+              )
             ))}
           </div>
         </div>
@@ -256,7 +323,7 @@ export function Services() {
 
       {activeDetails && (
         <div className="fixed inset-0 z-[999] flex items-center justify-center bg-black/60 px-4 safe-area-pb overflow-hidden">
-          <div className="max-w-lg w-full bg-zinc-900 border border-soviet-cream/10 rounded-3xl p-5 sm:p-6 md:p-8 shadow-2xl relative max-h-[92dvh] overflow-y-auto overscroll-contain">
+          <div className="max-w-lg w-full bg-zinc-900 border border-soviet-cream/10 rounded-3xl p-5 sm:p-6 md:p-8 shadow-2xl relative max-h-[92dvh] overflow-y-auto overscroll-contain scrollbar-none">
             <button
               type="button"
               className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full text-soviet-cream/50 hover:text-soviet-cream hover:bg-white/5 transition-colors"
@@ -283,26 +350,29 @@ export function Services() {
             <p className="text-soviet-cream/70 text-sm mb-6 leading-relaxed">
               {activeDetails.description}
             </p>
+            {activeGuide && (
+              <div className="mb-6 rounded-2xl border border-emerald-300/20 bg-emerald-400/10 p-4">
+                <h4 className="font-header text-sm uppercase tracking-widest text-emerald-200 mb-3">
+                  {activeGuide.title}
+                </h4>
+                <ul className="space-y-2 text-[12px] sm:text-[13px] text-soviet-cream/85 leading-relaxed">
+                  {activeGuide.points.map((point) => (
+                    <li key={point} className="flex items-start gap-2">
+                      <span className="mt-1 h-1.5 w-1.5 rounded-full bg-emerald-300 shrink-0" />
+                      <span>{point}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
             {activeDetails.orderUrl && (
-              <button
-                type="button"
-                onClick={() => {
-                  const { appUrl, webUrl } = getTelegramOpenUrls(activeDetails.orderUrl!);
-
-                  // 1) Пытаемся открыть приложение Telegram с текстом.
-                  window.location.href = appUrl;
-
-                  // 2) Если приложение не открылось, fallback в web-ссылку.
-                  window.setTimeout(() => {
-                    if (!document.hidden) {
-                      window.open(webUrl, "_blank", "noopener,noreferrer");
-                    }
-                  }, 700);
-                }}
+              <MessengerChoiceTrigger
+                title="Оформить через"
+                telegramUrl={getTelegramOpenUrls(activeDetails.orderUrl).appUrl}
                 className="inline-flex items-center justify-center w-full sm:w-auto min-h-[48px] bg-soviet-red text-white font-header text-sm px-6 py-3 uppercase tracking-widest hover:bg-red-700 active:scale-[0.99] transition-colors touch-manipulation"
               >
-                Оформить
-              </button>
+                {orderLabel}
+              </MessengerChoiceTrigger>
             )}
           </div>
         </div>
@@ -316,6 +386,8 @@ export function Services() {
                 ? "border-soviet-red/40"
                 : categoryModal === "travel"
                   ? "border-tech-cyan/40"
+                  : categoryModal === "transfers"
+                    ? "border-emerald-400/40"
                   : "border-soviet-cream/30"
             }`}
           >
@@ -325,9 +397,18 @@ export function Services() {
                   ? "bg-soviet-red"
                   : categoryModal === "travel"
                     ? "bg-tech-cyan"
+                    : categoryModal === "transfers"
+                      ? "bg-emerald-400"
                     : "bg-soviet-cream"
               }`}
             />
+            {categoryModal === "transfers" && (
+              <>
+                <div className="absolute -top-24 -right-20 w-64 h-64 rounded-full bg-emerald-400/20 blur-[70px] pointer-events-none" />
+                <div className="absolute -bottom-24 -left-16 w-56 h-56 rounded-full bg-tech-cyan/20 blur-[70px] pointer-events-none" />
+                <div className="absolute top-16 right-16 h-16 w-16 rounded-full border border-emerald-300/30 pointer-events-none" />
+              </>
+            )}
             <button
               type="button"
               className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full text-soviet-cream/50 hover:text-soviet-cream hover:bg-white/5 transition-colors"
@@ -348,13 +429,15 @@ export function Services() {
                 />
               </svg>
             </button>
-            <h3 className="font-header text-lg sm:text-xl md:text-2xl font-black uppercase mb-2 pr-10 pl-4 shrink-0">
+            <h3 className={`font-header text-lg sm:text-xl md:text-2xl font-black uppercase mb-2 pr-10 pl-4 shrink-0 ${categoryModal === "transfers" ? "text-emerald-200 headline-outline" : ""}`}>
               {CATEGORIES.find((c) => c.id === categoryModal)?.label}
             </h3>
             <p className="text-soviet-cream/50 text-[11px] sm:text-xs mb-4 sm:mb-6 pl-4 shrink-0 leading-relaxed">
-              Оплачиваем эти и другие сервисы в этой категории. Нажмите на сервис - откроется описание и кнопка «Оформить» в Telegram. Подберём тариф по запросу.
+              {categoryModal === "transfers"
+                ? "Международные денежные переводы и пополнение Alipay в одном окне. Выберите направление, откройте карточку и оформите заявку через Telegram или MAX."
+                : "Оплачиваем эти и другие сервисы в этой категории. Нажмите на сервис - откроется описание и кнопки Telegram/MAX для оформления."}
             </p>
-            <div className="pl-1.5 sm:pl-4 pr-1.5 flex flex-wrap gap-x-2 gap-y-2 sm:gap-x-3 sm:gap-y-2.5 flex-1 min-h-0 overflow-y-auto overscroll-contain pb-4">
+            <div className="pl-1.5 sm:pl-4 pr-1.5 flex flex-wrap gap-x-2 gap-y-2 sm:gap-x-3 sm:gap-y-2.5 flex-1 min-h-0 overflow-y-auto overscroll-contain pb-4 scrollbar-none">
               {CATEGORY_SERVICES[categoryModal].map((item) => {
                 const hasDetail = hasServiceDetail(item.name);
                 const firstLetter = item.name.trim().slice(0, 1).toUpperCase();
@@ -368,9 +451,15 @@ export function Services() {
                       setCategoryModal(null);
                       setActiveService(item.name);
                     }}
-                    className={`flex items-center gap-1 px-2 sm:px-3 py-2 min-h-[40px] rounded-full bg-white/5 border border-white/10 text-soviet-cream/80 text-[10.5px] sm:text-sm font-medium transition-colors text-left touch-manipulation ${
+                    className={`flex items-center gap-1 px-2 sm:px-3 py-2 min-h-[40px] rounded-full text-[10.5px] sm:text-sm font-medium transition-colors text-left touch-manipulation ${
+                      categoryModal === "transfers"
+                        ? "bg-emerald-400/10 border border-emerald-300/20 text-emerald-100"
+                        : "bg-white/5 border border-white/10 text-soviet-cream/80"
+                    } ${
                       hasDetail
-                        ? "hover:bg-white/10 hover:border-white/20 active:bg-white/15 cursor-pointer"
+                        ? categoryModal === "transfers"
+                          ? "hover:bg-emerald-400/20 hover:border-emerald-300/40 active:bg-emerald-400/25 cursor-pointer"
+                          : "hover:bg-white/10 hover:border-white/20 active:bg-white/15 cursor-pointer"
                         : "opacity-50 cursor-not-allowed"
                     }`}
                   >

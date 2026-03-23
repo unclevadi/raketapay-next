@@ -1,7 +1,5 @@
-import Link from "next/link";
 import Image from "next/image";
-
-const TELEGRAM_URL = "https://t.me/raketa_pay";
+import { MessengerChoiceTrigger } from "@/components/MessengerChoiceTrigger";
 
 // Используем картинку с космонавткой как подложку для героя.
 // Сохрани файл в папку public/images под именем "hero-cosmonaut.png".
@@ -35,26 +33,15 @@ export function Hero() {
           <span className="text-soviet-red headline-outline">Без ограничений.</span>
         </h1>
         <p className="text-soviet-cream/70 text-sm md:text-base max-w-xl mb-5 sm:mb-6">
-          Подписки, сервисы, аренда, путешествия - мощь советских технологий на
+          Подписки, сервисы, аренда, путешествия - мощь космических технологий на
           службе вашего комфорта.
         </p>
         <div className="flex flex-col min-[400px]:flex-row flex-wrap gap-3 sm:gap-4">
-          <Link
-            href={TELEGRAM_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+          <MessengerChoiceTrigger
             className="inline-flex justify-center bg-soviet-red text-white px-6 sm:px-8 py-3.5 sm:py-4 font-header text-xs sm:text-sm uppercase tracking-widest hover:bg-red-700 active:scale-[0.98] transition-all shadow-[0_0_20px_rgba(190,30,45,0.4)] min-h-[48px] items-center"
           >
-            Поехали
-          </Link>
-          <Link
-            href={TELEGRAM_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex justify-center border border-soviet-cream/30 text-soviet-cream px-6 sm:px-8 py-3.5 sm:py-4 font-header text-xs sm:text-sm uppercase tracking-widest hover:bg-soviet-cream hover:text-soviet-black active:scale-[0.98] transition-all min-h-[48px] items-center"
-          >
-            Telegram
-          </Link>
+            Получить консультацию
+          </MessengerChoiceTrigger>
         </div>
       </div>
     </section>

@@ -143,8 +143,15 @@ body.scrollbar-none {
   scrollbar-width: none;
 }
 
+/* Универсально: скрыть скроллбар у любого блока с классом scrollbar-none */
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 html.scrollbar-none::-webkit-scrollbar,
-body.scrollbar-none::-webkit-scrollbar {
+body.scrollbar-none::-webkit-scrollbar,
+.scrollbar-none::-webkit-scrollbar {
   width: 0;
   height: 0;
   display: none;

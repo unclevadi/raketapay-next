@@ -2,30 +2,27 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-
-const TELEGRAM_URL = "https://t.me/raketa_pay";
+import { MessengerChoiceTrigger } from "@/components/MessengerChoiceTrigger";
+import { lockBodyScroll, unlockBodyScroll } from "@/lib/body-scroll-lock";
 
 const NAV_LINKS = [
   { href: "#benefits", label: "Преимущества" },
   { href: "#services", label: "Сервисы" },
   { href: "#how-it-works", label: "Процесс" },
-  { href: "#rocket-ticket", label: "Билет на ракету" },
+  { href: "/business", label: "Для бизнеса" },
 ] as const;
 
 export function Nav() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [rocketModalOpen, setRocketModalOpen] = useState(false);
+  const [mobileMessengerOpen, setMobileMessengerOpen] = useState(false);
 
   useEffect(() => {
-    const open = menuOpen || rocketModalOpen;
-    if (!open) return;
-
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    if (!menuOpen) return;
+    lockBodyScroll();
     return () => {
-      document.body.style.overflow = prev;
+      unlockBodyScroll();
     };
-  }, [menuOpen, rocketModalOpen]);
+  }, [menuOpen]);
 
   return (
     <>
@@ -41,48 +38,40 @@ export function Nav() {
                 R
               </span>
             </div>
-            <span className="leading-[1.1] font-header font-black text-[0.95rem] min-[400px]:text-[1.05rem] sm:text-2xl tracking-tighter uppercase italic whitespace-nowrap">
-              RaketaPay
-            </span>
+            <div className="min-w-0">
+              <span className="block leading-[1.1] font-header font-black text-[0.95rem] min-[400px]:text-[1.05rem] sm:text-2xl tracking-tighter uppercase italic whitespace-nowrap">
+                RaketaPay
+              </span>
+              <span className="hidden sm:block text-[9px] xl:text-[10px] uppercase tracking-[0.18em] text-soviet-cream/50 whitespace-nowrap">
+                Международные платежи и сервисы
+              </span>
+            </div>
           </Link>
 
-          <div className="hidden md:flex items-center gap-8 font-header text-xs uppercase tracking-widest">
-            {NAV_LINKS.map(({ href, label }) =>
-              href === "#rocket-ticket" ? (
-                <button
-                  key={href}
-                  type="button"
-                  onClick={() => setRocketModalOpen(true)}
-                  className="hover:text-soviet-red transition-colors"
-                >
-                  {label}
-                </button>
-              ) : (
-                <Link
-                  key={href}
-                  href={href}
-                  className="hover:text-soviet-red transition-colors"
-                >
-                  {label}
-                </Link>
-              )
-            )}
+          <div className="hidden lg:flex items-center gap-6 xl:gap-8 font-header text-[11px] xl:text-xs uppercase tracking-widest">
+            {NAV_LINKS.map(({ href, label }) => (
+              <Link
+                key={href}
+                href={href}
+                className="whitespace-nowrap hover:text-soviet-red transition-colors"
+              >
+                {label}
+              </Link>
+            ))}
           </div>
 
           <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-            <Link
-              href={TELEGRAM_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+            <MessengerChoiceTrigger
               className="bg-soviet-red hover:bg-red-700 text-white font-header text-[10px] sm:text-xs px-3 sm:px-6 py-2.5 sm:py-3 rounded-none uppercase tracking-widest transition-all whitespace-nowrap"
+              modalPosition="below-header"
             >
-              <span className="hidden min-[400px]:inline">Связаться</span>
+              <span className="hidden min-[400px]:inline">Получить консультацию</span>
               <span className="inline min-[400px]:hidden">TG</span>
-            </Link>
+            </MessengerChoiceTrigger>
 
             <button
               type="button"
-              className="md:hidden w-11 h-11 flex flex-col items-center justify-center gap-1.5 rounded-lg border border-soviet-cream/15 text-soviet-cream hover:bg-white/5 transition-colors"
+              className="lg:hidden w-11 h-11 flex flex-col items-center justify-center gap-1.5 rounded-lg border border-soviet-cream/15 text-soviet-cream hover:bg-white/5 transition-colors"
               aria-expanded={menuOpen}
               aria-controls="mobile-nav"
               aria-label={menuOpen ? "Закрыть меню" : "Открыть меню"}
@@ -104,7 +93,7 @@ export function Nav() {
 
       <div
         id="mobile-nav"
-        className={`fixed inset-0 z-40 md:hidden transition-[visibility,opacity] duration-200 ${
+        className={`fixed inset-0 z-40 lg:hidden transition-[visibility,opacity] duration-200 ${
           menuOpen ? "visible opacity-100" : "invisible opacity-0 pointer-events-none"
         }`}
         aria-hidden={!menuOpen}
@@ -122,104 +111,35 @@ export function Nav() {
         >
           <nav className="px-4 py-6 flex flex-col gap-1 font-header text-sm uppercase tracking-widest">
             {NAV_LINKS.map(({ href, label }) => (
-              href === "#rocket-ticket" ? (
-                <button
-                  key={href}
-                  type="button"
-                  className="text-left py-4 px-3 rounded-lg hover:bg-white/5 hover:text-soviet-red transition-colors border-b border-white/5 last:border-0"
-                  onClick={() => {
-                    setMenuOpen(false);
-                    setRocketModalOpen(true);
-                  }}
-                >
-                  {label}
-                </button>
-              ) : (
-                <Link
-                  key={href}
-                  href={href}
-                  className="py-4 px-3 rounded-lg hover:bg-white/5 hover:text-soviet-red transition-colors border-b border-white/5 last:border-0"
-                  onClick={() => setMenuOpen(false)}
-                >
-                  {label}
-                </Link>
-              )
+              <Link
+                key={href}
+                href={href}
+                className="py-4 px-3 rounded-lg hover:bg-white/5 hover:text-soviet-red transition-colors border-b border-white/5 last:border-0"
+                onClick={() => setMenuOpen(false)}
+              >
+                {label}
+              </Link>
             ))}
-            <Link
-              href={TELEGRAM_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              type="button"
               className="mt-4 py-4 text-center bg-soviet-red text-white rounded-lg hover:bg-red-700 transition-colors"
-              onClick={() => setMenuOpen(false)}
+              onClick={() => {
+                setMenuOpen(false);
+                setMobileMessengerOpen(true);
+              }}
             >
-              Telegram
-            </Link>
+              Telegram / MAX
+            </button>
           </nav>
         </div>
       </div>
-
-      {rocketModalOpen && (
-        <div
-          className="fixed inset-0 z-[1200] flex items-center justify-center bg-black/70 px-4 safe-area-pb overflow-hidden"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="rocket-modal-title"
-          onMouseDown={(e) => {
-            if (e.target === e.currentTarget) setRocketModalOpen(false);
-          }}
-        >
-          <div className="max-w-2xl w-full bg-zinc-900 border border-soviet-cream/10 rounded-3xl p-5 sm:p-6 md:p-8 shadow-2xl relative max-h-[92dvh] overflow-y-auto overscroll-contain">
-            <button
-              type="button"
-              className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full text-soviet-cream/50 hover:text-soviet-cream hover:bg-white/5 transition-colors"
-              onClick={() => setRocketModalOpen(false)}
-              aria-label="Закрыть"
-            >
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </button>
-
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-tech-cyan text-xs uppercase tracking-widest">
-              <span className="w-1.5 h-1.5 rounded-full bg-tech-cyan" />
-              Раздел в разработке
-            </div>
-
-            <h3
-              id="rocket-modal-title"
-              className="mt-4 font-header text-2xl sm:text-3xl font-black uppercase italic headline-outline pr-10"
-            >
-              Билет на ракету
-            </h3>
-
-            <p className="mt-4 text-soviet-cream/70 text-sm sm:text-base leading-relaxed">
-              Мы разрабатываем личный кабинет для полной автоматизации сервиса:
-              управление заявками, статусами оплат, уведомлениями и историей
-              операций в одном месте. Скоро откроем доступ и сообщим о запуске.
-            </p>
-
-            <div className="mt-7">
-              <button
-                type="button"
-                onClick={() => setRocketModalOpen(false)}
-                className="inline-flex items-center justify-center w-full min-h-[48px] px-6 sm:px-8 py-3.5 sm:py-4 font-header text-xs sm:text-sm uppercase tracking-widest border border-soviet-cream/30 text-soviet-cream hover:bg-white/5 hover:text-white active:scale-[0.99] transition-colors touch-manipulation rounded-none"
-              >
-                Понятно
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <MessengerChoiceTrigger
+        hideTrigger
+        open={mobileMessengerOpen}
+        onOpenChange={setMobileMessengerOpen}
+      >
+        Telegram / MAX
+      </MessengerChoiceTrigger>
     </>
   );
 }
