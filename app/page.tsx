@@ -4,6 +4,7 @@ import { Benefits } from "@/components/Benefits";
 import { Services } from "@/components/Services";
 import { HowItWorks } from "@/components/HowItWorks";
 import { Conditions } from "@/components/Conditions";
+import { PriceExamples } from "@/components/PriceExamples";
 import { ActivityFeed } from "@/components/ActivityFeed";
 import { AnonymityBlock } from "@/components/AnonymityBlock";
 import { CTA } from "@/components/CTA";
@@ -51,6 +52,7 @@ export default function Home() {
           <Services />
           <HowItWorks />
           <Conditions />
+          <PriceExamples />
           <ActivityFeed />
           <AnonymityBlock />
           <CTA />

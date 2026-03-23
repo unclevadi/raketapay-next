@@ -24,12 +24,16 @@ type ServiceIcon =
       iconUrl: string;
       type?: "remote";
       iconBgClass?: string;
+      desktopOnly?: boolean;
+      visibilityClass?: string;
     }
   | {
       name: string;
       type: "fallback";
       initials: string;
       bgClass: string;
+      desktopOnly?: boolean;
+      visibilityClass?: string;
     };
 
 const SERVICES: ServiceIcon[] = [
@@ -40,6 +44,13 @@ const SERVICES: ServiceIcon[] = [
   { name: "Spotify", iconUrl: "https://cdn.simpleicons.org/spotify" },
   { name: "YouTube", iconUrl: "https://cdn.simpleicons.org/youtube" },
   { name: "Apple", iconUrl: "https://cdn.simpleicons.org/apple" },
+  {
+    name: "Vercel",
+    iconUrl: "https://cdn.simpleicons.org/vercel",
+    desktopOnly: true,
+    visibilityClass: "max-[837px]:hidden",
+  },
+  { name: "Wise", iconUrl: "https://cdn.simpleicons.org/wise", desktopOnly: true },
   { name: "Notion", iconUrl: "https://cdn.simpleicons.org/notion" },
   { name: "Figma", iconUrl: "https://cdn.simpleicons.org/figma" },
   {
@@ -51,9 +62,16 @@ const SERVICES: ServiceIcon[] = [
   },
   { name: "Zoom", iconUrl: "https://cdn.simpleicons.org/zoom" },
   { name: "Slack", iconUrl: "/icons/slack.png", type: "remote" },
+  { name: "Upwork", iconUrl: "https://cdn.simpleicons.org/upwork", desktopOnly: true },
   { name: "Booking.com", iconUrl: "https://cdn.simpleicons.org/booking.com" },
   { name: "Airbnb", iconUrl: "https://cdn.simpleicons.org/airbnb" },
   { name: "Emirates", iconUrl: "https://cdn.simpleicons.org/emirates" },
+  {
+    name: "Stripe",
+    iconUrl: "https://cdn.simpleicons.org/stripe",
+    desktopOnly: true,
+    visibilityClass: "max-[837px]:hidden",
+  },
   {
     name: "Turkish Airlines",
     iconUrl: "https://cdn.simpleicons.org/turkishairlines",
@@ -61,6 +79,12 @@ const SERVICES: ServiceIcon[] = [
   {
     name: "Discord",
     iconUrl: "https://cdn.simpleicons.org/discord",
+  },
+  {
+    name: "Fiverr",
+    iconUrl: "https://cdn.simpleicons.org/fiverr",
+    desktopOnly: true,
+    visibilityClass: "max-[837px]:hidden",
   },
   { name: "Roblox", iconUrl: "https://cdn.simpleicons.org/roblox" },
   {
@@ -70,21 +94,77 @@ const SERVICES: ServiceIcon[] = [
   { name: "Steam", iconUrl: "https://cdn.simpleicons.org/steam" },
   { name: "Tinder", iconUrl: "https://cdn.simpleicons.org/tinder" },
   { name: "OnlyFans", iconUrl: "https://cdn.simpleicons.org/onlyfans" },
+  {
+    name: "GitLab",
+    iconUrl: "https://cdn.simpleicons.org/gitlab",
+    desktopOnly: true,
+    visibilityClass: "max-[837px]:hidden",
+  },
   { name: "Badoo", iconUrl: "https://cdn.simpleicons.org/badoo" },
   { name: "Patreon", iconUrl: "https://cdn.simpleicons.org/patreon" },
   { name: "Alipay", iconUrl: "https://cdn.simpleicons.org/alipay" },
+  { name: "Docker", iconUrl: "https://cdn.simpleicons.org/docker", desktopOnly: true },
+  {
+    name: "Shopify",
+    iconUrl: "https://cdn.simpleicons.org/shopify",
+    desktopOnly: true,
+    visibilityClass: "max-[837px]:hidden",
+  },
+  {
+    name: "Payoneer",
+    iconUrl: "https://cdn.simpleicons.org/payoneer",
+    desktopOnly: true,
+    visibilityClass: "max-[985px]:hidden",
+  },
+  {
+    name: "Cloudflare",
+    iconUrl: "https://cdn.simpleicons.org/cloudflare",
+    desktopOnly: true,
+    visibilityClass: "max-[985px]:hidden",
+  },
+  {
+    name: "DigitalOcean",
+    iconUrl: "https://cdn.simpleicons.org/digitalocean",
+    desktopOnly: true,
+    visibilityClass: "max-[985px]:hidden",
+  },
+  {
+    name: "Kubernetes",
+    iconUrl: "https://cdn.simpleicons.org/kubernetes",
+    desktopOnly: true,
+    visibilityClass: "max-[985px]:hidden",
+  },
+  {
+    name: "Jira",
+    iconUrl: "https://cdn.simpleicons.org/jira",
+    desktopOnly: true,
+    visibilityClass: "max-[985px]:hidden",
+  },
+  {
+    name: "Asana",
+    iconUrl: "https://cdn.simpleicons.org/asana",
+    desktopOnly: true,
+    visibilityClass: "max-[985px]:hidden",
+  },
+  {
+    name: "Linear",
+    iconUrl: "https://cdn.simpleicons.org/linear",
+    desktopOnly: true,
+    visibilityClass: "max-[985px]:hidden",
+  },
   {
     name: "Денежные переводы",
     type: "fallback",
     initials: "FX",
     bgClass: "bg-tech-cyan/20 border border-tech-cyan/30 rounded-md",
+    visibilityClass: "max-[985px]:hidden",
   },
 ];
 
 const CATEGORIES = [
   { id: "subs", label: "Подписки & Софт", color: "bg-soviet-red" },
   { id: "travel", label: "Путешествия & Жилье", color: "bg-tech-cyan" },
-  { id: "market", label: "Маркетплейсы & Игры", color: "bg-soviet-cream" },
+  { id: "market", label: "Маркетплейсы & Игры", color: "bg-violet-400" },
   { id: "transfers", label: "Денежные переводы & Alipay", color: "bg-emerald-400" },
   { id: "business", label: "Для бизнеса", color: "bg-soviet-red" },
 ];
@@ -175,7 +255,7 @@ const SERVICE_GUIDES: Record<
     points: [
       "Напишите страну, валюту и сумму перевода.",
       "Пришлите реквизиты получателя (IBAN/SWIFT/номер карты - что доступно).",
-      "Мы считаем итог с комиссией и согласовываем перед оплатой.",
+      "Показываем итоговую сумму (включая все расходы) и согласовываем перед оплатой.",
       "После подтверждения отправляем перевод и сообщаем статус.",
     ],
   },
@@ -226,20 +306,20 @@ export function Services() {
     >
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 relative z-10">
         <div className="md:col-span-1">
-          <h2 className="font-header text-2xl sm:text-3xl font-black uppercase italic mb-3 sm:mb-4">
+          <h2 className="font-header text-[clamp(1.45rem,2.8vw,2.2rem)] font-black uppercase italic mb-3 sm:mb-4">
             Вселенная
             <br />
             Сервисов
           </h2>
-          <p className="text-soviet-cream/60 text-sm mb-4">
+          <p className="text-soviet-cream/70 text-[15px] sm:text-base leading-relaxed mb-4">
             Подписки, софт, путешествия, маркетплейсы, игры и международные
             переводы - оплачиваем что угодно.
           </p>
-          <p className="text-soviet-cream/50 text-xs leading-relaxed mb-8">
+          <p className="text-soviet-cream/55 text-[13px] sm:text-sm leading-relaxed mb-8">
             Raketa Pay - сервис оплаты зарубежных подписок и сервисов из России.
             В 2026 году через нас можно оплачивать не только подписки, но и
             Alipay и международные переводы: быстро, прозрачно и с поддержкой в
-            Telegram.
+            Telegram и MAX.
           </p>
           <div className="space-y-4">
             {CATEGORIES.map(({ id, label, color }) => (
@@ -252,7 +332,7 @@ export function Services() {
                   <div
                     className={`w-2 h-2 ${color} group-hover:w-4 transition-all shrink-0`}
                   />
-                  <span className="font-header text-[11px] sm:text-xs tracking-[0.14em] uppercase leading-tight">
+                  <span className="font-header text-xs sm:text-[13px] tracking-[0.12em] uppercase leading-tight">
                     {label}
                   </span>
                 </a>
@@ -266,7 +346,7 @@ export function Services() {
                   <div
                     className={`w-2 h-2 ${color} group-hover:w-4 transition-all shrink-0`}
                   />
-                  <span className="font-header text-[11px] sm:text-xs tracking-[0.14em] uppercase leading-tight">
+                  <span className="font-header text-xs sm:text-[13px] tracking-[0.12em] uppercase leading-tight">
                     {label}
                   </span>
                 </button>
@@ -283,7 +363,7 @@ export function Services() {
               return (
                 <div
                   key={service.name}
-                  className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 min-h-[44px] bg-white/5 border border-white/10 rounded-full hover:bg-white/10 active:bg-white/15 transition-colors touch-manipulation ${
+                  className={`${service.desktopOnly ? "hidden sm:flex" : "flex"} ${service.visibilityClass ?? ""} items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 min-h-[44px] bg-white/5 border border-white/10 rounded-full hover:bg-white/10 active:bg-white/15 transition-colors touch-manipulation ${
                     clickable ? "cursor-pointer" : "cursor-default"
                   }`}
                   onClick={
@@ -310,7 +390,7 @@ export function Services() {
                       />
                     </div>
                   )}
-                  <span className="text-soviet-cream/80 text-xs sm:text-sm font-medium truncate max-w-[200px] min-[400px]:max-w-none">
+                  <span className="text-soviet-cream/85 text-[13px] sm:text-[15px] font-medium leading-tight truncate max-w-[220px] min-[400px]:max-w-none">
                     {service.name}
                   </span>
                 </div>
@@ -386,6 +466,8 @@ export function Services() {
                 ? "border-soviet-red/40"
                 : categoryModal === "travel"
                   ? "border-tech-cyan/40"
+                  : categoryModal === "market"
+                    ? "border-violet-400/40"
                   : categoryModal === "transfers"
                     ? "border-emerald-400/40"
                   : "border-soviet-cream/30"
@@ -397,6 +479,8 @@ export function Services() {
                   ? "bg-soviet-red"
                   : categoryModal === "travel"
                     ? "bg-tech-cyan"
+                    : categoryModal === "market"
+                      ? "bg-violet-400"
                     : categoryModal === "transfers"
                       ? "bg-emerald-400"
                     : "bg-soviet-cream"

@@ -220,13 +220,19 @@ export default function BusinessPage() {
               <span aria-hidden>←</span> На главную
             </Link>
 
-            <h1 className="mt-4 font-header text-[clamp(1.35rem,6.6vw,3.6rem)] font-black uppercase italic leading-tight headline-outline break-normal whitespace-normal">
-              Международные платежи
-              <br />
-              <span className="text-soviet-red">для юрлиц без хаоса</span>
+            <h1 className="mt-4 font-header font-black uppercase italic leading-tight headline-outline break-normal whitespace-normal">
+              <span className="block text-[clamp(1.3rem,6.2vw,3.6rem)]">
+                Международные
+              </span>
+              <span className="block text-[clamp(1.3rem,6.2vw,3.6rem)]">
+                платежи
+              </span>
+              <span className="block text-soviet-red text-[clamp(1.35rem,6.8vw,3.6rem)]">
+                для юрлиц без хаоса
+              </span>
             </h1>
 
-            <p className="mt-4 text-soviet-cream/75 max-w-3xl text-sm sm:text-base leading-relaxed">
+            <p className="mt-4 text-soviet-cream/75 max-w-3xl text-[15px] sm:text-base leading-relaxed">
               Если платежи за рубеж тормозятся или не проходят, начните с
               консультации: мы проверим ваш кейс, предложим рабочий маршрут и
               проведем сделку до результата.
@@ -236,7 +242,7 @@ export default function BusinessPage() {
               {HERO_POINTS.map((point) => (
                 <div
                   key={point}
-                  className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs sm:text-sm text-soviet-cream/85"
+                  className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-[13px] sm:text-sm text-soviet-cream/85 leading-relaxed"
                 >
                   {point}
                 </div>
@@ -276,7 +282,7 @@ export default function BusinessPage() {
         </section>
 
         <section className="mt-4 rounded-2xl sm:rounded-3xl border border-soviet-cream/10 bg-zinc-900 p-4 sm:p-6">
-          <p className="text-[11px] uppercase tracking-widest text-soviet-cream/50 mb-2">
+          <p className="text-xs uppercase tracking-widest text-soviet-cream/50 mb-2">
             Быстрая навигация
           </p>
           <div className="flex flex-wrap gap-2">

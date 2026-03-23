@@ -17,12 +17,12 @@ export function AnonymityBlock() {
       </div>
       <div className="absolute inset-0 bg-gradient-to-r from-soviet-black/90 via-soviet-black/50 to-transparent z-20" />
       <div className="relative z-30 p-5 sm:p-8 h-full min-h-[220px] sm:min-h-[180px] flex flex-col justify-end">
-        <h3 className="font-header text-xl sm:text-2xl font-black uppercase mb-2 headline-outline">
-          Полная Анонимность
+        <h3 className="font-header text-[clamp(1.2rem,2.4vw,1.7rem)] font-black uppercase mb-2 headline-outline">
+          Безопасность и конфиденциальность
         </h3>
-        <p className="text-soviet-cream/70 max-w-md text-sm sm:text-base">
-          Ваши данные - это только ваше дело. Мы не задаем лишних вопросов, мы
-          просто выполняем задачу.
+        <p className="text-soviet-cream/75 max-w-md text-[15px] sm:text-base leading-relaxed">
+          Не запрашиваем лишние данные и работаем только с информацией, которая
+          действительно нужна для выполнения задачи.
         </p>
       </div>
     </section>

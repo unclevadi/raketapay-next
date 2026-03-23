@@ -133,6 +133,26 @@ body.modal-open .bento-card:hover {
   animation: arrow-sweep 1.8s ease-in-out infinite;
 }
 
+@keyframes price-marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.price-marquee {
+  overflow: hidden;
+  width: 100%;
+}
+
+.price-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: price-marquee 30s linear infinite;
+}
+
 /**
  * Скрыть стандартную «полоску» скроллбара справа (Chrome / Safari / Firefox).
  * Прокрутка колёсиком, тачем и клавишами сохраняется.

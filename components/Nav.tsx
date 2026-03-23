@@ -62,7 +62,7 @@ export function Nav() {
 
           <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             <MessengerChoiceTrigger
-              className="bg-soviet-red hover:bg-red-700 text-white font-header text-[10px] sm:text-xs px-3 sm:px-5 lg:px-6 py-2.5 sm:py-3 rounded-none uppercase tracking-[0.08em] sm:tracking-widest transition-all whitespace-nowrap max-w-[56vw] sm:max-w-none truncate"
+              className="bg-soviet-red hover:bg-red-700 text-white font-header text-[11px] sm:text-xs px-3 sm:px-5 lg:px-6 py-2.5 sm:py-3 rounded-none uppercase tracking-[0.08em] sm:tracking-widest transition-all whitespace-nowrap max-w-[52vw] sm:max-w-none truncate"
               modalPosition="below-header"
             >
               <span className="inline sm:hidden">Связаться</span>

@@ -24,7 +24,7 @@ export function HowItWorks() {
       id="how-it-works"
       className="md:col-span-7 bg-zinc-900 rounded-2xl sm:rounded-3xl p-5 sm:p-8 bento-card relative overflow-hidden"
     >
-      <h3 className="font-header text-xl sm:text-2xl font-black uppercase mb-6 sm:mb-8 italic">
+      <h3 className="font-header text-[clamp(1.2rem,5vw,1.75rem)] font-black uppercase mb-5 sm:mb-8 italic">
         Траектория Полета
       </h3>
       <div className="flex flex-col md:flex-row md:flex-nowrap items-stretch md:items-center gap-2 md:gap-6 relative">
@@ -41,10 +41,10 @@ export function HowItWorks() {
                 >
                   {step.num}
                 </div>
-                <div className="font-header text-xs uppercase tracking-tighter">
+                <div className="font-header text-[13px] sm:text-sm uppercase tracking-tighter">
                   {step.title}
                 </div>
-                <p className="text-xs text-soviet-cream/50 max-w-none md:max-w-[130px]">
+                <p className="text-[13px] sm:text-sm text-soviet-cream/70 leading-relaxed max-w-none md:max-w-[150px]">
                   {step.desc}
                 </p>
               </div>

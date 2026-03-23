@@ -22,15 +22,15 @@ export function Benefits() {
               />
             </svg>
           </div>
-          <h3 className="font-header text-xl font-bold uppercase mb-2">
+          <h3 className="font-header text-[clamp(1.2rem,2.4vw,1.65rem)] font-bold uppercase mb-2">
             Глобальный охват
           </h3>
-          <p className="text-soviet-cream/60 text-sm">
+          <p className="text-soviet-cream/70 text-[15px] sm:text-base leading-relaxed">
             Любая точка планеты, любой зарубежный сервис. Наши границы там, где
             мы захотим.
           </p>
         </div>
-        <div className="mt-8 text-xs font-mono text-tech-cyan/50 tracking-widest">
+        <div className="mt-8 text-[13px] sm:text-sm font-mono text-tech-cyan/50 tracking-widest">
           LOCATION: ORBITAL_WIDE
         </div>
       </section>
@@ -56,15 +56,15 @@ export function Benefits() {
               />
             </svg>
           </div>
-          <h3 className="font-header text-xl font-bold uppercase mb-2">
+          <h3 className="font-header text-[clamp(1.2rem,2.4vw,1.65rem)] font-bold uppercase mb-2">
             Скорость Света
           </h3>
-          <p className="text-soviet-cream/60 text-sm">
+          <p className="text-soviet-cream/70 text-[15px] sm:text-base leading-relaxed">
             Оплата в течение 15 минут. Быстрее, чем первая ступень отделяется от
             носителя.
           </p>
         </div>
-        <div className="mt-8 text-xs font-mono text-tech-cyan/50 tracking-widest">
+        <div className="mt-8 text-[13px] sm:text-sm font-mono text-tech-cyan/50 tracking-widest">
           LATENCY: &lt;15 MIN
         </div>
       </section>
