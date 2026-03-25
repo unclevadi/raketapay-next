@@ -15,7 +15,7 @@ export function CTA() {
       >
         <span className="text-center">Выбрать канал связи</span>
         <span className="text-[10px] sm:text-xs tracking-[0.18em] opacity-80 -mt-1 sm:mt-0 sm:-ml-2">
-          Telegram / MAX
+          Telegram
         </span>
         <svg
           className="h-5 w-5 sm:h-6 sm:w-6 transform sm:group-hover:translate-x-2 transition-transform shrink-0"

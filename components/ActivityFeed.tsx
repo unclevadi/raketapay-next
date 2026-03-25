@@ -90,13 +90,13 @@ export function ActivityFeed() {
   }, []);
 
   return (
-    <section className="md:col-span-4 bg-zinc-950 rounded-2xl sm:rounded-3xl p-4 sm:p-6 bento-card font-mono text-[9px] sm:text-[10px] border border-white/5 min-h-[200px] h-[min(16rem,42vh)] sm:h-64 overflow-hidden">
+    <section className="md:col-span-4 bg-zinc-950 rounded-2xl sm:rounded-3xl p-4 sm:p-6 bento-card font-mono text-[10px] sm:text-[10px] border border-white/5 min-h-[200px] h-[min(16rem,42vh)] sm:h-64 overflow-hidden">
       <div className="mb-3">
         <div className="flex justify-between border-b border-white/10 pb-2">
           <span className="text-soviet-cream/40">SYSTEM_LOG_REALTIME</span>
           <span className="text-soviet-red">LIVE</span>
         </div>
-        <p className="text-soviet-cream/30 text-[9px] mt-1.5">
+        <p className="text-soviet-cream/30 text-[10px] mt-1.5">
           [OK] оплата принята · [DONE] заказ выполнен
         </p>
       </div>

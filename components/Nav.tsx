@@ -9,6 +9,7 @@ const NAV_LINKS = [
   { href: "#benefits", label: "Преимущества" },
   { href: "#services", label: "Сервисы" },
   { href: "#how-it-works", label: "Процесс" },
+  { href: "#reviews", label: "Отзывы" },
   { href: "/business", label: "Для бизнеса" },
 ] as const;
 
@@ -129,7 +130,7 @@ export function Nav() {
                 setMobileMessengerOpen(true);
               }}
             >
-              Telegram / MAX
+              Telegram
             </button>
           </nav>
         </div>
@@ -139,7 +140,7 @@ export function Nav() {
         open={mobileMessengerOpen}
         onOpenChange={setMobileMessengerOpen}
       >
-        Telegram / MAX
+        Telegram
       </MessengerChoiceTrigger>
     </>
   );

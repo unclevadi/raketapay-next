@@ -3,7 +3,22 @@
 import { useEffect, useState } from "react";
 import { getServiceDetail, hasServiceDetail } from "@/lib/service-details";
 import { MessengerChoiceTrigger } from "@/components/MessengerChoiceTrigger";
+import { MAX_ENABLED } from "@/lib/messenger-config";
 import { lockBodyScroll, unlockBodyScroll } from "@/lib/body-scroll-lock";
+
+declare global {
+  interface Window {
+    ym?: (counterId: number, method: string, ...args: any[]) => void;
+  }
+}
+
+const YM_ID = 108240458;
+
+function ymReach(goal: string, params?: Record<string, unknown>) {
+  try {
+    window.ym?.(YM_ID, "reachGoal", goal, params);
+  } catch {}
+}
 
 function getTelegramOpenUrls(orderUrl: string) {
   // Формат из lib/service-details: tg://resolve?domain=...&text=...
@@ -26,6 +41,7 @@ type ServiceIcon =
       iconBgClass?: string;
       desktopOnly?: boolean;
       visibilityClass?: string;
+      iconSizeClass?: string;
     }
   | {
       name: string;
@@ -39,6 +55,36 @@ type ServiceIcon =
 const SERVICES: ServiceIcon[] = [
   // Главное - чтобы корректно работали бренды, которые ты перечислил
   // Для ChatGPT, Adobe, Slack, Amazon используем локальные иконки из public/icons
+  {
+    name: "Claude",
+    iconUrl: "https://cdn.simpleicons.org/anthropic",
+    type: "remote",
+    iconSizeClass: "h-6 w-6",
+  },
+  {
+    name: "Gemini",
+    iconUrl: "https://cdn.simpleicons.org/googlegemini",
+    type: "remote",
+    iconSizeClass: "h-6 w-6",
+  },
+  {
+    name: "GenSpark",
+    iconUrl: "https://www.google.com/s2/favicons?domain=genspark.ai&sz=64",
+    type: "remote",
+    iconSizeClass: "h-6 w-6",
+  },
+  {
+    name: "Manus",
+    iconUrl: "https://www.google.com/s2/favicons?domain=manus.im&sz=64",
+    type: "remote",
+    iconSizeClass: "h-6 w-6",
+  },
+  {
+    name: "Higgsfield",
+    iconUrl: "https://www.google.com/s2/favicons?domain=higgsfield.ai&sz=64",
+    type: "remote",
+    iconSizeClass: "h-6 w-6",
+  },
   { name: "ChatGPT", iconUrl: "/icons/chatgpt.png", type: "remote" },
   { name: "Netflix", iconUrl: "https://cdn.simpleicons.org/netflix" },
   { name: "Spotify", iconUrl: "https://cdn.simpleicons.org/spotify" },
@@ -165,6 +211,7 @@ const CATEGORIES = [
   { id: "subs", label: "Подписки & Софт", color: "bg-soviet-red" },
   { id: "travel", label: "Путешествия & Жилье", color: "bg-tech-cyan" },
   { id: "market", label: "Маркетплейсы & Игры", color: "bg-violet-400" },
+  { id: "ai", label: "AI & Генерация", color: "bg-fuchsia-400" },
   { id: "transfers", label: "Денежные переводы & Alipay", color: "bg-emerald-400" },
   { id: "business", label: "Для бизнеса", color: "bg-soviet-red" },
 ];
@@ -174,6 +221,30 @@ const CDN_ICON = (slug: string) => `https://cdn.simpleicons.org/${slug}`;
 type CategoryItem = { name: string; iconUrl: string };
 
 const CATEGORY_SERVICES: Record<string, CategoryItem[]> = {
+  ai: [
+    { name: "Chat GPT", iconUrl: "/icons/chatgpt.png" },
+    { name: "Suno AI", iconUrl: "https://www.google.com/s2/favicons?domain=suno.com&sz=64" },
+    { name: "Midjourney", iconUrl: CDN_ICON("midjourney") },
+    { name: "Gamma AI", iconUrl: CDN_ICON("gamma") },
+    { name: "DeepSeek", iconUrl: "https://www.google.com/s2/favicons?domain=deepseek.com&sz=64" },
+    { name: "Cursor AI", iconUrl: CDN_ICON("cursor") },
+    { name: "Krea AI", iconUrl: "https://www.google.com/s2/favicons?domain=krea.ai&sz=64" },
+    { name: "Open API", iconUrl: CDN_ICON("openai") },
+    { name: "Kling AI", iconUrl: "https://www.google.com/s2/favicons?domain=klingai.com&sz=64" },
+    { name: "Claude", iconUrl: CDN_ICON("anthropic") },
+    { name: "Freepik", iconUrl: CDN_ICON("freepik") },
+    { name: "Runway AI", iconUrl: CDN_ICON("runway") },
+    { name: "ElevenLabs", iconUrl: CDN_ICON("elevenlabs") },
+    { name: "Higgsfield AI", iconUrl: "https://www.google.com/s2/favicons?domain=higgsfield.ai&sz=64" },
+    { name: "Candy AI", iconUrl: "https://www.google.com/s2/favicons?domain=candy.ai&sz=64" },
+    { name: "Lensa AI", iconUrl: "https://www.google.com/s2/favicons?domain=lensa-ai.com&sz=64" },
+    { name: "Google Gemini", iconUrl: CDN_ICON("googlegemini") },
+    { name: "Perplexity AI", iconUrl: CDN_ICON("perplexity") },
+    { name: "NanoBanana", iconUrl: "https://www.google.com/s2/favicons?domain=manus.im&sz=64" },
+    { name: "Grok AI", iconUrl: "https://www.google.com/s2/favicons?domain=x.ai&sz=64" },
+    { name: "Leonardo AI", iconUrl: "https://www.google.com/s2/favicons?domain=leonardo.ai&sz=64" },
+    { name: "Pika", iconUrl: "https://www.google.com/s2/favicons?domain=pika.art&sz=64" },
+  ],
   subs: [
     { name: "ChatGPT", iconUrl: "/icons/chatgpt.png" },
     { name: "Netflix", iconUrl: CDN_ICON("netflix") },
@@ -319,7 +390,7 @@ export function Services() {
             Raketa Pay - сервис оплаты зарубежных подписок и сервисов из России.
             В 2026 году через нас можно оплачивать не только подписки, но и
             Alipay и международные переводы: быстро, прозрачно и с поддержкой в
-            Telegram и MAX.
+            {MAX_ENABLED ? "Telegram и MAX." : "Telegram."}
           </p>
           <div className="space-y-4">
             {CATEGORIES.map(({ id, label, color }) => (
@@ -340,7 +411,10 @@ export function Services() {
                 <button
                   key={id}
                   type="button"
-                  onClick={() => setCategoryModal(id)}
+                  onClick={() => {
+                    ymReach("services_category_open", { category: id });
+                    setCategoryModal(id);
+                  }}
                   className="w-full flex items-center gap-4 group text-left hover:opacity-90 transition-opacity"
                 >
                   <div
@@ -367,7 +441,12 @@ export function Services() {
                     clickable ? "cursor-pointer" : "cursor-default"
                   }`}
                   onClick={
-                    clickable ? () => setActiveService(service.name) : undefined
+                    clickable
+                      ? () => {
+                          ymReach("service_card_open", { service: service.name });
+                          setActiveService(service.name);
+                        }
+                      : undefined
                   }
                 >
                   {isFallback ? (
@@ -385,12 +464,12 @@ export function Services() {
                       <img
                         src={service.iconUrl}
                         alt={service.name}
-                        className="h-5 w-5 object-contain"
+                        className={`${service.iconSizeClass ?? "h-5 w-5"} object-contain`}
                         loading="lazy"
                       />
                     </div>
                   )}
-                  <span className="text-soviet-cream/85 text-[13px] sm:text-[15px] font-medium leading-tight truncate max-w-[220px] min-[400px]:max-w-none">
+                  <span className="text-soviet-cream/85 text-[13px] sm:text-[15px] font-medium leading-tight truncate max-w-[170px] min-[400px]:max-w-none">
                     {service.name}
                   </span>
                 </div>
@@ -468,9 +547,11 @@ export function Services() {
                   ? "border-tech-cyan/40"
                   : categoryModal === "market"
                     ? "border-violet-400/40"
-                  : categoryModal === "transfers"
-                    ? "border-emerald-400/40"
-                  : "border-soviet-cream/30"
+                    : categoryModal === "ai"
+                      ? "border-fuchsia-400/40"
+                    : categoryModal === "transfers"
+                      ? "border-emerald-400/40"
+                    : "border-soviet-cream/30"
             }`}
           >
             <div
@@ -481,9 +562,11 @@ export function Services() {
                     ? "bg-tech-cyan"
                     : categoryModal === "market"
                       ? "bg-violet-400"
-                    : categoryModal === "transfers"
-                      ? "bg-emerald-400"
-                    : "bg-soviet-cream"
+                      : categoryModal === "ai"
+                        ? "bg-fuchsia-400"
+                      : categoryModal === "transfers"
+                        ? "bg-emerald-400"
+                      : "bg-soviet-cream"
               }`}
             />
             {categoryModal === "transfers" && (
@@ -518,8 +601,16 @@ export function Services() {
             </h3>
             <p className="text-soviet-cream/50 text-[11px] sm:text-xs mb-4 sm:mb-6 pl-4 shrink-0 leading-relaxed">
               {categoryModal === "transfers"
-                ? "Международные денежные переводы и пополнение Alipay в одном окне. Выберите направление, откройте карточку и оформите заявку через Telegram или MAX."
-                : "Оплачиваем эти и другие сервисы в этой категории. Нажмите на сервис - откроется описание и кнопки Telegram/MAX для оформления."}
+                ? MAX_ENABLED
+                  ? "Международные денежные переводы и пополнение Alipay в одном окне. Выберите направление, откройте карточку и оформите заявку через Telegram или MAX."
+                  : "Международные денежные переводы и пополнение Alipay в одном окне. Выберите направление, откройте карточку и оформите заявку через Telegram."
+                : categoryModal === "ai"
+                  ? MAX_ENABLED
+                    ? "Подписки и доступ к популярным AI‑сервисам. Выберите сервис - откроется карточка с описанием и кнопкой оформления через Telegram или MAX."
+                    : "Подписки и доступ к популярным AI‑сервисам. Выберите сервис - откроется карточка с описанием и кнопкой оформления через Telegram."
+                : MAX_ENABLED
+                  ? "Оплачиваем эти и другие сервисы в этой категории. Нажмите на сервис - откроется описание и кнопки Telegram/MAX для оформления."
+                  : "Оплачиваем эти и другие сервисы в этой категории. Нажмите на сервис - откроется описание и кнопка Telegram для оформления."}
             </p>
             <div className="pl-1.5 sm:pl-4 pr-1.5 flex flex-wrap gap-x-2 gap-y-2 sm:gap-x-3 sm:gap-y-2.5 flex-1 min-h-0 overflow-y-auto overscroll-contain pb-4 scrollbar-none">
               {CATEGORY_SERVICES[categoryModal].map((item) => {
@@ -532,6 +623,11 @@ export function Services() {
                     disabled={!hasDetail}
                     onClick={() => {
                       if (!hasDetail) return;
+                      ymReach("service_card_open", {
+                        service: item.name,
+                        source: "category_modal",
+                        category: categoryModal,
+                      });
                       setCategoryModal(null);
                       setActiveService(item.name);
                     }}
@@ -548,7 +644,7 @@ export function Services() {
                     }`}
                   >
                     <div className="relative h-5 w-5 shrink-0">
-                      {/* Пока картинка не загрузилась — показываем бейдж, чтобы модалка не выглядела “битой”. */}
+                      {/* Пока картинка не загрузилась - показываем бейдж, чтобы модалка не выглядела “битой”. */}
                       {!iconLoaded[item.name] || iconErrors[item.name] ? (
                         <div className="h-5 w-5 rounded-md bg-white/5 border border-white/10 flex items-center justify-center text-[10px] font-header text-soviet-cream/80 shrink-0">
                           {firstLetter}

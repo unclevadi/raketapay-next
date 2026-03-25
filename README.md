@@ -1,4 +1,4 @@
-# RaketaPay — Next.js
+# RaketaPay - Next.js
 
 Лендинг на Next.js (App Router), Tailwind, с SEO и удобной кастомизацией.
 
@@ -19,17 +19,17 @@ npm run build
 npm start
 ```
 
-Или задеплой на [Vercel](https://vercel.com) (подключи репозиторий — деплой по push).
+Или задеплой на [Vercel](https://vercel.com) (подключи репозиторий - деплой по push).
 
 ## Кастомизация
 
-- **Цвета и шрифты** — `tailwind.config.ts` (цвета `soviet-*`, `tech-cyan`, `fontFamily`).
-- **Главная картинка (Hero)** — в `components/Hero.tsx` поменяй константу `HERO_IMAGE` (URL или путь к файлу в `public/`).
-- **Блок «Анонимность»** — картинка в `components/AnonymityBlock.tsx`, константа `ANON_IMAGE`.
-- **Сервисы (теги)** — массив `TAGS` в `components/Services.tsx`.
-- **Шаги «Траектория полёта»** — массив `STEPS` в `components/HowItWorks.tsx`.
-- **Лог активности** — массивы `INITIAL_LOGS` и `ROTATING_LOGS` в `components/ActivityFeed.tsx`.
-- **SEO** — в `app/layout.tsx` в объекте `metadata` и `openGraph` укажи свой `url` и `images`.
+- **Цвета и шрифты** - `tailwind.config.ts` (цвета `soviet-*`, `tech-cyan`, `fontFamily`).
+- **Главная картинка (Hero)** - в `components/Hero.tsx` поменяй константу `HERO_IMAGE` (URL или путь к файлу в `public/`).
+- **Блок «Анонимность»** - картинка в `components/AnonymityBlock.tsx`, константа `ANON_IMAGE`.
+- **Сервисы (теги)** - массив `TAGS` в `components/Services.tsx`.
+- **Шаги «Траектория полёта»** - массив `STEPS` в `components/HowItWorks.tsx`.
+- **Лог активности** - массивы `INITIAL_LOGS` и `ROTATING_LOGS` в `components/ActivityFeed.tsx`.
+- **SEO** - в `app/layout.tsx` в объекте `metadata` и `openGraph` укажи свой `url` и `images`.
 
 Картинки: можно класть файлы в `public/images/` и подставлять пути вида `/images/hero.jpg`.
 

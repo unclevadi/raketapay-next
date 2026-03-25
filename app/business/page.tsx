@@ -2,13 +2,12 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { Footer } from "@/components/Footer";
 import { MessengerChoiceTrigger } from "@/components/MessengerChoiceTrigger";
+import { MAX_ENABLED } from "@/lib/messenger-config";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://example.com";
 const base = siteUrl.replace(/\/$/, "");
 const businessUrl = `${base}/business`;
 
-const PHONE_LABEL = "+7 (999) 123-45-67";
-const PHONE_HREF = "tel:+79991234567";
 const EMAIL = "support@raketapay.ru";
 const WORKING_HOURS = "Пн-Пт 09:00-24:00, Сб-Вс 09:00-21:00 (МСК)";
 const AVG_RESPONSE = "Отвечаем обычно за 5-10 минут в рабочее время";
@@ -44,33 +43,52 @@ const TRUST_POINTS = [
 
 const CASES = [
   {
-    country: "Китай",
+    country: "Китай - оплата инвойса поставщику",
     amount: "¥380,000",
     term: "48 часов",
-    tags: ["Инвойс", "Китай", "Поставщик"],
-    result: "Оплачен инвойс фабрики, подтверждение от получателя получено.",
+    tags: ["Инвойс", "Поставщик", "CNY"],
+    result:
+      "Клиент прислал инвойс и реквизиты. Согласовали маршрут и итоговую сумму до старта - после оплаты получили подтверждение зачисления от фабрики.",
   },
   {
-    country: "Турция",
+    country: "Турция - закупка товара под контракт",
     amount: "$62,000",
     term: "24 часа",
-    tags: ["Поставщик", "Оплата товара"],
-    result: "Платеж за товар проведен, закрывающие документы переданы клиенту.",
+    tags: ["Поставщик", "USD", "Документы"],
+    result:
+      "Собрали минимальный пакет данных, проверили риски и провели оплату. Закрывающие документы и подтверждение операции передали бухгалтерии клиента.",
   },
   {
-    country: "Германия",
+    country: "Германия - продление корпоративного SaaS",
     amount: "€44,500",
     term: "36 часов",
     tags: ["SaaS", "Инвойс", "B2B"],
-    result: "Оплачен SaaS-контракт для юрлица, маршрут согласован заранее.",
+    result:
+      "Нужно было продлить сервис без паузы в доступе. Заранее согласовали маршрут и сроки, провели оплату по инвойсу - доступ продлили в тот же день.",
   },
   {
-    country: "Сложный сценарий: Китай + ЕС",
+    country: "Сложный кейс - Китай + ЕС, несколько контрагентов",
     amount: "$128,000",
     term: "72 часа",
     tags: ["Сложный кейс", "Маршрут", "ВЭД"],
     result:
-      "Комбинированный платеж с несколькими контрагентами: сначала согласовали маршрут и документы, затем провели оплату без возвратов.",
+      "Сначала разобрали задачу на части и согласовали документы/порядок. Затем провели комбинированную оплату по согласованному плану - без возвратов и с контролем статуса на каждом шаге.",
+  },
+  {
+    country: "ОАЭ - счет на услуги (контракт + акт)",
+    amount: "$18,700",
+    term: "24 часа",
+    tags: ["Услуги", "Контракт", "Акт"],
+    result:
+      "У клиента был договор и акт. Проверили реквизиты и назначение, согласовали итог и провели оплату. Клиент получил подтверждение для отчётности.",
+  },
+  {
+    country: "США - подписка и инвойс на ПО для команды",
+    amount: "$9,900",
+    term: "18 часов",
+    tags: ["ПО", "Подписка", "Команда"],
+    result:
+      "Нужно было быстро закрыть платеж, чтобы не остановить работу. Согласовали сценарий, оплатили инвойс и подтвердили зачисление - без лишних шагов и переписок.",
   },
 ];
 
@@ -84,7 +102,9 @@ const FLOW = [
 const FAQ = [
   {
     q: "С чего начать, если кейс сложный?",
-    a: "Напишите в Telegram или позвоните. Мы запросим минимум данных, проверим маршрут и предложим рабочий план без обязательств на первом шаге.",
+    a: MAX_ENABLED
+      ? "Напишите в Telegram или MAX. Мы запросим минимум данных, проверим маршрут и предложим рабочий план без обязательств на первом шаге."
+      : "Напишите в Telegram. Мы запросим минимум данных, проверим маршрут и предложим рабочий план без обязательств на первом шаге.",
   },
   {
     q: "Какие сроки проведения платежа?",
@@ -255,12 +275,6 @@ export default function BusinessPage() {
               >
                 Получить консультацию
               </MessengerChoiceTrigger>
-              <a
-                href={PHONE_HREF}
-                className="inline-flex items-center justify-center w-full sm:w-auto min-h-[48px] border border-soviet-cream/30 text-soviet-cream font-header text-[11px] sm:text-sm px-5 sm:px-6 py-3 uppercase tracking-[0.08em] sm:tracking-widest hover:bg-white/5 transition-colors"
-              >
-                Позвонить: {PHONE_LABEL}
-              </a>
             </div>
 
             <div className="mt-4 rounded-xl border border-emerald-300/20 bg-emerald-400/10 px-3.5 py-3">
@@ -378,7 +392,7 @@ export default function BusinessPage() {
               финального зачисления».
             </p>
             <p className="mt-3 text-[11px] uppercase tracking-widest text-soviet-cream/50">
-              Финансовый менеджер, импорт-компания
+              Клиент под NDA
             </p>
           </div>
         </section>
@@ -424,12 +438,6 @@ export default function BusinessPage() {
           </div>
           <div className="mt-6">
             <div className="flex flex-col sm:flex-row gap-3">
-              <a
-                href={PHONE_HREF}
-                className="inline-flex items-center justify-center min-h-[48px] border border-soviet-cream/30 text-soviet-cream font-header text-xs sm:text-sm px-6 py-3 uppercase tracking-widest hover:bg-white/5 transition-colors"
-              >
-                Позвонить
-              </a>
               <MessengerChoiceTrigger
                 className="inline-flex items-center justify-center min-h-[48px] bg-soviet-red text-white font-header text-xs sm:text-sm px-6 py-3 uppercase tracking-widest hover:bg-red-700 transition-colors"
               >

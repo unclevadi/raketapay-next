@@ -10,7 +10,7 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="md:col-span-8 md:row-span-2 relative overflow-hidden bg-zinc-900 rounded-2xl sm:rounded-3xl bento-card group min-h-[min(68vh,560px)] sm:min-h-[min(78vh,620px)] md:min-h-[min(85vh,660px)] flex items-end"
+      className="md:col-span-8 md:row-span-2 relative overflow-hidden bg-zinc-900 rounded-2xl sm:rounded-3xl bento-card group min-h-[min(60vh,520px)] sm:min-h-[min(78vh,620px)] md:min-h-[min(85vh,660px)] flex items-end"
     >
       <div className="absolute inset-0 z-0">
         {/* Полупрозрачный фильтр по всей высоте, без светлого верха */}

@@ -14,7 +14,7 @@ export function Footer() {
             RaketaPay
           </span>
         </Link>
-        <div className="text-[10px] font-header tracking-widest uppercase opacity-40 flex flex-wrap justify-center gap-8">
+        <div className="text-[11px] sm:text-[10px] font-header tracking-widest uppercase opacity-40 flex flex-wrap justify-center gap-6 sm:gap-8">
           <Link href="/terms" className="hover:text-soviet-red transition-colors">
             Пользовательское соглашение
           </Link>

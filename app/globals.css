@@ -33,7 +33,7 @@
   }
 }
 
-/* Когда открыта модалка (Services) — отключаем hover-«прыжки» фоновых карточек. */
+/* Когда открыта модалка (Services) - отключаем hover-«прыжки» фоновых карточек. */
 body.modal-open .bento-card:hover {
   border-color: rgba(245, 245, 220, 0.1) !important;
   transform: none !important;

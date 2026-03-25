@@ -13,7 +13,7 @@ export function ContactBlock() {
       </h2>
       <p className="mt-2 text-soviet-cream/70 text-sm sm:text-base max-w-3xl">
         Нужна оплата сервиса, подписки или международный перевод? Выберите удобный
-        канал - Telegram или MAX, либо позвоните.
+        канал - Telegram, либо позвоните.
       </p>
 
       <div className="mt-5 grid grid-cols-1 md:grid-cols-3 gap-3">

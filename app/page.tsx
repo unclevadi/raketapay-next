@@ -7,6 +7,7 @@ import { Conditions } from "@/components/Conditions";
 import { PriceExamples } from "@/components/PriceExamples";
 import { ActivityFeed } from "@/components/ActivityFeed";
 import { AnonymityBlock } from "@/components/AnonymityBlock";
+import { Reviews } from "@/components/Reviews";
 import { CTA } from "@/components/CTA";
 import { Footer } from "@/components/Footer";
 import { getServiceItemListJsonLd } from "@/lib/service-details";
@@ -53,6 +54,7 @@ export default function Home() {
           <HowItWorks />
           <Conditions />
           <PriceExamples />
+          <Reviews />
           <ActivityFeed />
           <AnonymityBlock />
           <CTA />

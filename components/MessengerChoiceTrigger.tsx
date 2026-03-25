@@ -2,6 +2,7 @@
 
 import { useEffect, useId, useState } from "react";
 import { lockBodyScroll, unlockBodyScroll } from "@/lib/body-scroll-lock";
+import { MAX_ENABLED } from "@/lib/messenger-config";
 
 const DEFAULT_TELEGRAM_URL = "https://t.me/raketa_pay";
 const DEFAULT_MAX_URL = process.env.NEXT_PUBLIC_MAX_URL ?? "";
@@ -134,7 +135,7 @@ export function MessengerChoiceTrigger({
                 Telegram
               </button>
 
-              {maxUrl ? (
+              {MAX_ENABLED && maxUrl ? (
                 <a
                   href={maxUrl}
                   target="_blank"
@@ -150,7 +151,8 @@ export function MessengerChoiceTrigger({
                   />
                   MAX
                 </a>
-              ) : (
+              ) : null}
+              {MAX_ENABLED && !maxUrl ? (
                 <button
                   type="button"
                   disabled
@@ -165,7 +167,7 @@ export function MessengerChoiceTrigger({
                   />
                   MAX
                 </button>
-              )}
+              ) : null}
             </div>
           </div>
         </div>
