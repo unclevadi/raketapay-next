@@ -2,7 +2,7 @@ import { MessengerChoiceTrigger } from "@/components/MessengerChoiceTrigger";
 
 export function CTA() {
   return (
-    <section className="md:col-span-12 bg-soviet-red rounded-2xl sm:rounded-3xl px-4 py-9 sm:p-12 md:p-20 bento-card text-center relative overflow-hidden group">
+    <section className="md:col-span-12 bg-soviet-red rounded-2xl sm:rounded-3xl px-4 py-8 sm:px-10 sm:py-10 md:px-14 md:py-12 bento-card text-center relative overflow-hidden group">
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-20">
         <div className="absolute top-10 left-10 w-40 h-1 bg-white" />
         <div className="absolute bottom-10 right-10 w-40 h-1 bg-white" />
@@ -31,6 +31,7 @@ export function CTA() {
           />
         </svg>
       </MessengerChoiceTrigger>
+
       <p className="mt-5 sm:mt-8 font-header text-[10px] sm:text-[11px] tracking-[0.16em] sm:tracking-[0.38em] uppercase opacity-75 relative z-10 px-2 leading-relaxed">
         Ваш надежный терминал в мире без границ
       </p>

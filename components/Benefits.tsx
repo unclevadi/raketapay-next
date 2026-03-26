@@ -1,3 +1,8 @@
+const WORKING_HOURS = "Пн-Пт 09:00-24:00, Сб-Вс 09:00-21:00 (МСК)";
+
+import { PreferredChannelPoll } from "@/components/PreferredChannelPoll";
+import { PromoCard } from "@/components/PromoCard";
+
 export function Benefits() {
   return (
     <>
@@ -68,6 +73,32 @@ export function Benefits() {
           LATENCY: &lt;15 MIN
         </div>
       </section>
+
+      <section className="md:col-span-4 bg-zinc-900 rounded-2xl sm:rounded-3xl p-5 sm:p-8 bento-card flex flex-col justify-between overflow-hidden relative border border-emerald-300/15">
+        <div className="absolute -right-10 -bottom-10 opacity-10">
+          <div className="w-48 h-48 rounded-full bg-emerald-400/30 blur-[2px]" />
+        </div>
+        <div>
+          <div className="text-emerald-300 mb-4">
+            <svg className="h-10 w-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h3 className="font-header text-[clamp(1.2rem,2.4vw,1.65rem)] font-bold uppercase mb-2">
+            Режим работы
+          </h3>
+          <p className="text-soviet-cream/70 text-[15px] sm:text-base leading-relaxed">
+            {WORKING_HOURS}
+          </p>
+        </div>
+        <div className="mt-8 text-[13px] sm:text-sm font-mono text-emerald-200/70 tracking-widest">
+          MSK (UTC+3)
+        </div>
+      </section>
+
+      <PromoCard />
+
+      <PreferredChannelPoll />
     </>
   );
 }

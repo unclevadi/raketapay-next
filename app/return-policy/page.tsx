@@ -106,7 +106,13 @@ export default function ReturnPolicyPage() {
 5.3. Изменения Политики возврата
 Raketa Pay оставляет за собой право вносить изменения в Политику возврата. Актуальная версия Политики публикуется на странице https://raketapay.ru/return-policy.
 
-Если у вас возникли вопросы по возврату, напишите в поддержку в Telegram или по контактам, указанным на сайте Raketa Pay.`}
+Если у вас возникли вопросы по возврату, напишите в поддержку в Telegram или по контактам, указанным на сайте Raketa Pay.
+
+---
+Company details (for billing)
+Name: ROCKET SMART LLC
+Address: 347 Kukcha Darvoza St., Shaykhantakhur District, Tashkent, Uzbekistan
+TIN: 312756294`}
       </div>
     </main>
   );

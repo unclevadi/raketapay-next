@@ -4,10 +4,28 @@ import { useEffect, useId, useState } from "react";
 import { lockBodyScroll, unlockBodyScroll } from "@/lib/body-scroll-lock";
 import { MAX_ENABLED } from "@/lib/messenger-config";
 
+declare global {
+  interface Window {
+    __raketaTelegramFallbackTimer?: number;
+    __raketaTelegramInProgressUntil?: number;
+  }
+}
+
 const DEFAULT_TELEGRAM_URL = "https://t.me/raketa_pay";
 const DEFAULT_MAX_URL = process.env.NEXT_PUBLIC_MAX_URL ?? "";
 
 function openTelegram(url: string) {
+  // Prevent duplicate opens caused by double-taps or reopening the modal quickly.
+  const now = Date.now();
+  const cooldownMs = 1500;
+  if ((window.__raketaTelegramInProgressUntil ?? 0) > now) return;
+  window.__raketaTelegramInProgressUntil = now + cooldownMs;
+
+  if (window.__raketaTelegramFallbackTimer) {
+    window.clearTimeout(window.__raketaTelegramFallbackTimer);
+    window.__raketaTelegramFallbackTimer = undefined;
+  }
+
   if (url.startsWith("tg://")) {
     const domainMatch = url.match(/[?&]domain=([^&]+)/);
     const textMatch = url.match(/[?&]text=([^&]+)/);
@@ -16,7 +34,7 @@ function openTelegram(url: string) {
     const webUrl = `https://t.me/${encodeURIComponent(domain)}?text=${encodeURIComponent(text)}`;
 
     window.location.href = url;
-    window.setTimeout(() => {
+    window.__raketaTelegramFallbackTimer = window.setTimeout(() => {
       if (!document.hidden) {
         window.open(webUrl, "_blank", "noopener,noreferrer");
       }

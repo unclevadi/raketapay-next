@@ -2,7 +2,7 @@ import { MessengerChoiceTrigger } from "@/components/MessengerChoiceTrigger";
 
 const PHONE_LABEL = "+7 (999) 123-45-67";
 const PHONE_HREF = "tel:+79991234567";
-const EMAIL = "support@raketapay.ru";
+const EMAIL = "info@raketapay.ru";
 const WORKING_HOURS = "Пн-Пт 09:00-24:00, Сб-Вс 09:00-21:00 (МСК)";
 
 export function ContactBlock() {

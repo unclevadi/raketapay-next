@@ -1,5 +1,12 @@
 import Link from "next/link";
 
+const EMAIL = "info@raketapay.ru";
+const COMPANY = {
+  name: "ROCKET SMART LLC",
+  tin: "312756294",
+  city: "Tashkent, Uzbekistan",
+};
+
 export function Footer() {
   return (
     <footer className="border-t border-soviet-cream/10 pt-10 sm:pt-12 pb-8 px-4 sm:px-6 safe-area-pb">
@@ -27,6 +34,15 @@ export function Footer() {
           >
             Политика возврата
           </Link>
+          <a
+            href={`mailto:${EMAIL}`}
+            className="hover:text-soviet-red transition-colors"
+          >
+            {EMAIL}
+          </a>
+          <span className="opacity-60">
+            {COMPANY.name} • TIN {COMPANY.tin} • {COMPANY.city}
+          </span>
           <span>© 2026 Все права защищены</span>
         </div>
       </div>

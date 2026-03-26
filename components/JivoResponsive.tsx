@@ -18,6 +18,7 @@ declare global {
 
 const WIDGET_SRC = "//code.jivo.ru/widget/cNVyP30Bfn";
 const YM_ID = 108240458;
+const LAUNCHER_ATTR = "data-raketa-jivo-launcher";
 
 function isMobileViewport() {
   // Tailwind sm breakpoint is 640px.
@@ -45,6 +46,48 @@ export function JivoResponsive() {
 
   const mobile = mounted && isMobile;
 
+  const hideJivoNativeLauncher = useCallback(() => {
+    if (!mobile) return;
+    if (typeof document === "undefined") return;
+
+    const launcherEl = document.querySelector<HTMLElement>(`[${LAUNCHER_ATTR}="1"]`);
+
+    // Jivo can inject different wrappers; instead of relying on class/id, hide any small fixed element
+    // near bottom-right EXCEPT our custom launcher.
+    const all = Array.from(document.querySelectorAll<HTMLElement>("body *"));
+
+    for (const el of all) {
+      if (launcherEl && (el === launcherEl || launcherEl.contains(el))) continue;
+      if (el.getAttribute(LAUNCHER_ATTR) === "1") continue;
+
+      const style = window.getComputedStyle(el);
+      if (style.position !== "fixed") continue;
+      const rect = el.getBoundingClientRect();
+
+      // Heuristic: the launcher is a small fixed element near the bottom-right.
+      const isSmall = rect.width > 10 && rect.width < 140 && rect.height > 10 && rect.height < 140;
+      const nearRight = rect.right > window.innerWidth - 220;
+      const nearBottom = rect.bottom > window.innerHeight - 260;
+      if (!isSmall || !nearRight || !nearBottom) continue;
+
+      el.style.setProperty("display", "none", "important");
+      el.style.setProperty("visibility", "hidden", "important");
+      el.style.setProperty("pointer-events", "none", "important");
+    }
+  }, [mobile]);
+
+  const hideJivoNativeLauncherRepeated = useCallback(() => {
+    if (!mobile) return;
+    let n = 0;
+    const max = 25; // ~5 seconds
+    const tick = () => {
+      hideJivoNativeLauncher();
+      n += 1;
+      if (n < max) window.setTimeout(tick, 200);
+    };
+    tick();
+  }, [hideJivoNativeLauncher, mobile]);
+
   // Mobile-only: set Widget API hooks before script loads.
   useEffect(() => {
     if (!mobile) return;
@@ -56,6 +99,7 @@ export function JivoResponsive() {
       try {
         window.jivo_api?.close?.();
       } catch {}
+      hideJivoNativeLauncherRepeated();
     };
 
     window.jivo_onOpen = function () {
@@ -65,8 +109,9 @@ export function JivoResponsive() {
       try {
         window.jivo_api?.close?.();
       } catch {}
+      hideJivoNativeLauncherRepeated();
     };
-  }, [mobile]);
+  }, [hideJivoNativeLauncherRepeated, mobile]);
 
   const ensureWidgetLoaded = useCallback(() => {
     if (!mobile) return;
@@ -88,6 +133,7 @@ export function JivoResponsive() {
     const timeoutMs = 6000;
     const tick = () => {
       if (window.jivo_api?.open) {
+        hideJivoNativeLauncherRepeated();
         window.jivo_api.open({ start: "chat" });
         return;
       }
@@ -95,7 +141,7 @@ export function JivoResponsive() {
       window.setTimeout(tick, 120);
     };
     tick();
-  }, [ensureWidgetLoaded, mobile]);
+  }, [ensureWidgetLoaded, hideJivoNativeLauncherRepeated, mobile]);
 
   return (
     <>
@@ -134,6 +180,7 @@ export function JivoResponsive() {
           type="button"
           aria-label="Открыть чат"
           onClick={openChat}
+          data-raketa-jivo-launcher="1"
           className="fixed right-4 bottom-4 safe-area-pb z-[1200] h-14 w-14 rounded-full bg-soviet-red text-white shadow-[0_14px_36px_-14px_rgba(190,30,45,0.9)] active:scale-[0.98] transition-transform flex items-center justify-center"
         >
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">

@@ -8,7 +8,7 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://example.com";
 const base = siteUrl.replace(/\/$/, "");
 const businessUrl = `${base}/business`;
 
-const EMAIL = "support@raketapay.ru";
+const EMAIL = "info@raketapay.ru";
 const WORKING_HOURS = "Пн-Пт 09:00-24:00, Сб-Вс 09:00-21:00 (МСК)";
 const AVG_RESPONSE = "Отвечаем обычно за 5-10 минут в рабочее время";
 
