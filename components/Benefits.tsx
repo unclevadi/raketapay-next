@@ -36,7 +36,7 @@ export function Benefits() {
           </p>
         </div>
         <div className="mt-8 text-[13px] sm:text-sm font-mono text-tech-cyan/50 tracking-widest">
-          LOCATION: ORBITAL_WIDE
+          ОХВАТ: ВЕСЬ МИР
         </div>
       </section>
 
@@ -70,7 +70,7 @@ export function Benefits() {
           </p>
         </div>
         <div className="mt-8 text-[13px] sm:text-sm font-mono text-tech-cyan/50 tracking-widest">
-          LATENCY: &lt;15 MIN
+          СКОРОСТЬ: &lt;15 МИН
         </div>
       </section>
 
@@ -92,7 +92,7 @@ export function Benefits() {
           </p>
         </div>
         <div className="mt-8 text-[13px] sm:text-sm font-mono text-emerald-200/70 tracking-widest">
-          MSK (UTC+3)
+          МСК (UTC+3)
         </div>
       </section>
 

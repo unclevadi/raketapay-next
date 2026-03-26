@@ -185,13 +185,13 @@ export function PreferredChannelPoll() {
       <div className="mt-8 text-[13px] sm:text-sm font-mono text-soviet-cream/40 tracking-widest">
         {status === "saved"
           ? isLocked
-            ? "THANKS"
-            : "SAVED"
+            ? "СПАСИБО"
+            : "СОХРАНЕНО"
           : status === "error"
-            ? "ERROR"
+            ? "ОШИБКА"
             : pickedLabel
-              ? `PICKED: ${pickedLabel}`
-              : "PICK ONE"}
+              ? `ВЫБРАНО: ${pickedLabel}`
+              : "ВЫБЕРИТЕ ВАРИАНТ"}
       </div>
     </section>
   );

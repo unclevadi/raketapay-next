@@ -7,7 +7,7 @@ declare global {
 }
 
 const YM_ID = 108240458;
-const PROMO_CODE = "ROCKET";
+const PROMO_CODE = "РАКЕТА";
 
 export function PromoCard() {
   return (
@@ -51,12 +51,12 @@ export function PromoCard() {
               } catch {}
             }}
           >
-            Copy
+            Копировать
           </button>
         </div>
       </div>
       <div className="mt-8 text-[13px] sm:text-sm font-mono text-tech-cyan/50 tracking-widest">
-        CODE: {PROMO_CODE}
+        КОД: {PROMO_CODE}
       </div>
     </section>
   );

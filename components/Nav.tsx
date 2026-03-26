@@ -84,26 +84,6 @@ export function Nav() {
           </div>
 
           <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-            {/* Contacts row: show only on very wide screens to avoid layout shifting */}
-            <div className="hidden min-[1400px]:flex items-center gap-2 mr-2">
-              <a
-                href={TELEGRAM_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center h-9 w-9 rounded-lg border border-soviet-cream/20 bg-white/5 text-soviet-cream/90 hover:bg-white/10 transition-colors"
-                aria-label="Написать в Telegram"
-                title="Telegram"
-              >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path
-                    d="M21.9 4.6 19 19.1c-.2 1-.8 1.2-1.6.8l-4.5-3.3-2.2 2.1c-.2.2-.4.4-.8.4l.3-4.8 8.8-8c.4-.3-.1-.5-.6-.2l-10.8 6.8-4.6-1.4c-1-.3-1-1 .2-1.5L20 3.7c.9-.4 1.7.2 1.9.9Z"
-                    fill="currentColor"
-                    opacity="0.9"
-                  />
-                </svg>
-              </a>
-            </div>
-
             <button
               type="button"
               onClick={openTelegramDirect}
