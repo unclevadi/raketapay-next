@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Unbounded, Inter } from "next/font/google";
 import Script from "next/script";
-import { JivoResponsive } from "@/components/JivoResponsive";
+import { JivoSiteOnly } from "@/components/JivoSiteOnly";
 import "./globals.css";
 
 const unbounded = Unbounded({
@@ -110,7 +110,7 @@ export default function RootLayout({
           </div>
         </noscript>
 
-        <JivoResponsive />
+        <JivoSiteOnly />
         {children}
       </body>
     </html>
